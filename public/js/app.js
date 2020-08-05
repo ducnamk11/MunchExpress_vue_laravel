@@ -1993,7 +1993,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['categories'],
+  props: ['categories', 'restoId'],
   data: function data() {
     return {
       food: {
@@ -2008,7 +2008,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     handleSubmit: function handleSubmit() {
-      console.log('data form ', this.food);
+      console.log('dataForm ', this.food);
+      var postData = this.food;
+      postData.restoId = this.restoId;
+      window.axios.post('api/item/save', postData).then(function (response) {
+        console.log('response', response.data);
+      })["catch"](function (error) {
+        return console.log('error1', error.response);
+      });
     }
   }
 });
@@ -2061,7 +2068,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['items'],
+  props: ['items', 'restoId'],
   components: {
     Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default.a,
     MenuGroups: _MenuGroups__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -38581,7 +38588,12 @@ var render = function() {
                 "template",
                 { slot: "main" },
                 [
-                  _c("menu-add-form", { attrs: { categories: _vm.categories } })
+                  _c("menu-add-form", {
+                    attrs: {
+                      categories: _vm.categories,
+                      "resto-id": _vm.restoId
+                    }
+                  })
                 ],
                 1
               )

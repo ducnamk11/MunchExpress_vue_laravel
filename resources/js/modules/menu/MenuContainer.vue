@@ -16,7 +16,7 @@
         <card-component>
           <template slot="title"> add Menu Item</template>
           <template slot="main">
-            <menu-add-form :categories="categories"></menu-add-form>
+            <menu-add-form :categories="categories" :resto-id="restoId"></menu-add-form>
           </template>
         </card-component>
       </div>
@@ -31,7 +31,7 @@
   import MenuAddForm from "./MenuAddForm";
 
   export default {
-    props: ['items'],
+    props: ['items','restoId'],
     components: {
       Multiselect, MenuGroups, MenuAddForm
     },

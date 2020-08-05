@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Category;
-use App\Models\Menu;
+use App\Rules\RestoCategoryValidate;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
     public function store(Request $request)
     {
+        $postData = $this->validate($request, [
+            'category' => ['required', new RestoCategoryValidate(request('restoId'))],
+            'restoId' => 'required|numeric',
+            'price' => 'required|numeric',
+            'item' => 'required',
+        ]);
         return $request->all();
     }
 }
