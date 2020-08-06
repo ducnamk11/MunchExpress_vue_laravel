@@ -28,10 +28,10 @@ class RestoCategoryValidate implements Rule
      */
     public function passes($attribute, $value)
     {
+
         if (Category::where('name', $value)->where('resto_id', $this->restoId)->first()) {
             return true;
         }
-
         return false;
     }
 

@@ -1997,6 +1997,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2018,12 +2024,15 @@ __webpack_require__.r(__webpack_exports__);
       var postData = this.food;
       postData.restoId = this.restoId;
       window.axios.post('api/item/save', postData).then(function (response) {
-        console.log('response', response.data);
+        _this.$emit('newMenuItemAdded', response.data, postData.category);
+
+        console.log('response-data', response.data);
+        console.log('postData-category', postData.category);
       })["catch"](function (error) {
         console.log('ERROR', error.response);
 
         if (error.response.status == 422) {
-          console.log('hello', error.response.data.errors);
+          console.log('hasError', error.response.data.errors);
 
           _this.validation.setMessage(error.response.data.errors);
         }
@@ -2032,7 +2041,8 @@ __webpack_require__.r(__webpack_exports__);
     getBasicMenuItem: function getBasicMenuItem() {
       return {
         item: '',
-        category: [],
+        description: '',
+        category: '',
         price: 10000
       };
     }
@@ -2082,6 +2092,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2101,16 +2115,24 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     this.menu = this.categories[0];
+    this.localItems = this.items;
   },
   data: function data() {
     return {
+      localItem: '',
       menu: '',
       categories: []
     };
   },
   computed: {
     currentmenuItem: function currentmenuItem() {
-      return this.items[this.menu];
+      return this.localItems[this.menu];
+    }
+  },
+  methods: {
+    handleNewMenuItem: function handleNewMenuItem(item, category) {
+      console.log('category', category);
+      this.localItems[category].unshift(item);
     }
   }
 });
@@ -38501,7 +38523,45 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "name" } }, [_vm._v("Food price")]),
+          _c("label", [_vm._v("Description")]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.food.description,
+                expression: "food.description"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              id: "",
+              cols: "10",
+              rows: "5",
+              placeholder: "Enter food Description"
+            },
+            domProps: { value: _vm.food.description },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.food, "description", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("div", {
+            staticClass: "validation-message",
+            domProps: {
+              textContent: _vm._s(_vm.validation.getMessage("description"))
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", [_vm._v("Food price")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -38630,7 +38690,8 @@ var render = function() {
                     attrs: {
                       categories: _vm.categories,
                       "resto-id": _vm.restoId
-                    }
+                    },
+                    on: { newMenuItemAdded: _vm.handleNewMenuItem }
                   })
                 ],
                 1

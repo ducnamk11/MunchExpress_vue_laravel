@@ -15,11 +15,17 @@
       </div>
 
       <div class="form-group">
-        <label for="name">Food price</label>
+        <label  >Description</label>
+        <textarea class="form-control" v-model="food.description" id="" cols="10" rows="5" placeholder="Enter food Description"></textarea>
+        <div class="validation-message" v-text="validation.getMessage('description')"></div>
+      </div>
+
+      <div class="form-group">
+        <label  >Food price</label>
         <input class="form-control " type="number" placeholder="Enter food item Price" v-model="food.price">
         <div class="validation-message" v-text="validation.getMessage('price')"></div>
-
       </div>
+
       <div class="form-group">
         <button class="btn btn-primary"> save</button>
       </div>
@@ -48,11 +54,13 @@
         let postData = this.food;
         postData.restoId = this.restoId;
         window.axios.post('api/item/save', postData).then(response => {
-          console.log('response', response.data);
+          this.$emit('newMenuItemAdded', response.data, postData.category);
+          console.log('response-data', response.data);
+          console.log('postData-category', postData.category);
         }).catch(error => {
             console.log('ERROR', error.response);
             if (error.response.status == 422) {
-              console.log('hello',error.response.data.errors)
+              console.log('hasError', error.response.data.errors)
               this.validation.setMessage(error.response.data.errors);
             }
           }
@@ -62,7 +70,8 @@
       getBasicMenuItem() {
         return {
           item: '',
-          category: [],
+          description: '',
+          category: '',
           price: 10000,
         }
       },
