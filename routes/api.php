@@ -16,5 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('item/save', 'MenuController@store')->name('menu.store');
 
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::post('/resto', 'RestaurantController@store')->name('restaurant.store');
+    Route::post('/resto/menu', 'MenuController@getRestoMenu');
+});
+
+Route::post('item/save', 'MenuController@store')->name('menu.store');

@@ -5,8 +5,7 @@
       <tr>
         <th>name , Description</th>
         <th>Price</th>
-        <th>Price</th>
-      </tr>
+       </tr>
       </thead>
       <tbody>
       <tr v-for="(item, key) in items" :key="key">

@@ -17,6 +17,7 @@ class CreateRestauransTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('location');
+            $table->integer('tables')->default(1);
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->index('owner_id');

@@ -59,10 +59,11 @@
       }
     },
     methods: {
-      handleNewMenuItem(item,category) {
-        console.log('category', category);
+      handleNewMenuItem(item, category) {
+        console.log('category-handleNewMenuItem', category);
+        console.log('item-handleNewMenuItem', item);
+        console.log(' this.localItems[category]', this.localItems[category]);
         this.localItems[category].unshift(item);
-
       }
     }
   }
