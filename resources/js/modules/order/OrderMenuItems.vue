@@ -1,29 +1,16 @@
 <template>
-  <ul class="list-group">
-    <li class="list-group-item" v-for="(item,key) in items" :key="key">
-
-      <div class="row">
-        <div class="col-md-10">
-          {{item.name}}
-          <span class="float-right">{{item.price}}</span>
-          <br>
-          <small>
-            <!--  {{item.category.id}}-->
-            category name</small>
-        </div>
-        <div class="col-md-2">
-          <button class="btn btn-primary">Add</button>
-        </div>
-      </div>
-    </li>
-  </ul>
+  <div class="wrapper">
+    <menu-search :items="items"></menu-search>
+    <menu-items :items="items"></menu-items>
+  </div>
 </template>
 
 <script>
+  import MenuItems from "./MenuItems";
+  import MenuSearch from "./MenuSearch";
+
   export default {
+    components: {MenuItems, MenuSearch},
     props: ['items'],
-    data() {
-      return {}
-    }
   }
 </script>

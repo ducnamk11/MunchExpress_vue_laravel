@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Restaurant;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -25,5 +26,10 @@ class OrderController extends Controller
     {
         $resto = Restaurant::findOrFail($id);
         return view('order.add')->with('resto', $resto);
+    }
+    public function save(Request $request)
+    {
+        return $request->all();
+
     }
 }

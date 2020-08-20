@@ -1,26 +1,23 @@
 <template>
   <div class="wrapper">
-    <form action="">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" v-model="customer.name">
-      </div>
-      <div class="form-group">
-        <label for="name">phone</label>
-        <input type="text" class="form-control" v-model="customer.phone">
-      </div>
-      <div class="form-group">
-        <label for="name">address</label>
-        <input type="text" class="form-control" v-model="customer.address">
-      </div>
 
-    </form>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="(orderDetail, key) in orderDetails " :key="key">
+        {{orderDetail.name}} <span class="float-right">{{orderDetail.price}}</span>
+        <br>
+        <small>
+          <!--  {{item.category.id}}-->
+          category name</small>
+      </li>
+
+    </ul>
 
   </div>
 </template>
 
 <script>
   export default {
+    props: ['orderDetails'],
     data() {
       return {
         customer: {
@@ -29,6 +26,7 @@
           address: '',
         }
       }
-    }
+    },
+
   }
 </script>
